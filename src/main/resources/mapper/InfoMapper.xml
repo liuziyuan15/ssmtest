@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.InfoDao">
+    <resultMap id="InfoMap" type="com.pojo.Info" >
+        <id column="eid" property="eid" jdbcType="INTEGER" />
+        <result column="name" property="Name" jdbcType="VARCHAR" />
+        <result column="num" property="Num" jdbcType="INTEGER" />
+        <result column="province" property="Province" jdbcType="VARCHAR"/>
+        <result column="city" property="City" jdbcType="VARCHAR"/>
+        <result column="area" property="Area" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="addInfo" parameterType="Info">
+        INSERT INTO info(eid,name,num,province,city,area) VALUE (#{eid},#{Name},#{Num},#{Province},#{City},#{Area})
+    </insert>
+
+    <delete id="deleteInfoById" parameterType="java.lang.Integer">
+        DELETE FROM info WHERE eid=#{eid}
+    </delete>
+
+    <update id="updateInfo" parameterType="Info">
+        UPDATE info
+        SET province = #{Province}, city = #{City}, area = #{Area}
+        WHERE  eid = #{eid}
+    </update>
+
+    <select id="queryById" resultType="Info" parameterType="java.lang.Integer">
+        SELECT eid,province,city,area
+        FROM info
+        WHERE eid = #{eid}
+    </select>
+
+    <select id="queryAllInfo" resultMap="InfoMap">
+        SELECT *
+        FROM info
+    </select>
+
+</mapper>
